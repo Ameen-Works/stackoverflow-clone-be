@@ -48,7 +48,7 @@ router.get("/:id", async (req, res) => {
     // res.status(200).send(question);
     QuestionDB.aggregate([
       {
-        $match: { _id: mongoose.Types.ObjectId(req.params.id) },
+        $match: { _id: new mongoose.Types.ObjectId(req.params.id) },
       },
       {
         $lookup: {
@@ -126,6 +126,7 @@ router.get("/:id", async (req, res) => {
         res.status(400).send(error);
       });
   } catch (err) {
+    console.log(err);
     res.status(400).send({
       message: "Question not found",
     });
@@ -179,10 +180,10 @@ router.get("/", async (req, res) => {
           {
             $project: {
               _id: 1,
-              // user_id: 1,
-              // answer: 1,
-              // created_at: 1,
-              // question_id: 1,
+              user_id: 1,
+              answer: 1,
+              created_at: 1,
+              question_id: 1,
               // created_at: 1,
             },
           },
